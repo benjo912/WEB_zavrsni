@@ -1,9 +1,50 @@
 {% extends 'base.html' %}
 {% block content %}
-<h2>Register</h2>
+
+<div class="auth-card">
+
+<h2>Create Account</h2>
+
 <form method="post">
 {% csrf_token %}
-{{ form.as_p }}
+
+<label>Username</label>
+{{ form.username }}
+
+<label>Email</label>
+{{ form.email }}
+
+<label>Birth date</label>
+{{ form.birth_date }}
+
+<div class="password-box">
+<label>Password</label>
+{{ form.password1 }}
+<span onclick="togglePass1()">👁</span>
+</div>
+
+<div class="password-box">
+<label>Confirm Password</label>
+{{ form.password2 }}
+<span onclick="togglePass2()">👁</span>
+</div>
+
 <button type="submit">Register</button>
+
 </form>
+
+</div>
+
+<script>
+function togglePass1(){
+ let f=document.getElementById("id_password1")
+ f.type = f.type==="password" ? "text":"password"
+}
+
+function togglePass2(){
+ let f=document.getElementById("id_password2")
+ f.type = f.type==="password" ? "text":"password"
+}
+</script>
+
 {% endblock %}

@@ -1,11 +1,33 @@
 {% extends 'base.html' %}
-
 {% block content %}
+
+<div class="auth-card">
+
 <h2>Login</h2>
 
 <form method="post">
 {% csrf_token %}
-{{ form.as_p }}
+
+<label>Username</label>
+{{ form.username }}
+
+<div class="password-box">
+<label>Password</label>
+{{ form.password }}
+<span onclick="togglePassword()">👁</span>
+</div>
+
 <button type="submit">Login</button>
+
 </form>
+
+</div>
+
+<script>
+function togglePassword(){
+ let field=document.getElementById("id_password")
+ field.type = field.type==="password" ? "text" : "password"
+}
+</script>
+
 {% endblock %}

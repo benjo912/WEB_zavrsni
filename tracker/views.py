@@ -1,108 +1,97 @@
 from django.shortcuts import render, redirect
-from django.contrib.auth.forms import UserCreationForm
-from django.contrib.auth.views import LoginView
-from django.views.generic import ListView, CreateView, UpdateView, DeleteView
+from django.views.generic import ListView, CreateView, UpdateView, DeleteView, TemplateView
 from django.urls import reverse_lazy
+from django.contrib.auth.mixins import LoginRequiredMixin
 from .models import Exercise, FitnessGoal, Workout
+from .forms import RegisterForm
 
 
-# HOME
 def home(request):
-    goals = FitnessGoal.objects.all()
-    return render(request,"home.html",{"goals":goals})
+    return render(request, "home.html")
 
 
-# REGISTER
+class AboutView(TemplateView):
+    template_name = "about.html"
+
+
 def register(request):
-    form = UserCreationForm(request.POST or None)
+    form = RegisterForm(request.POST or None)
     if form.is_valid():
         form.save()
         return redirect("login")
     return render(request, "register.html", {"form": form})
 
 
-# ------------------ EXERCISES ------------------
-
-class ExerciseList(ListView):
+class ExerciseList(LoginRequiredMixin, ListView):
     model = Exercise
     template_name = "exercise_list.html"
 
-    def get_queryset(self):
-        query = self.request.GET.get("q")
-        if query:
-            return Exercise.objects.filter(name__icontains=query)
-        return Exercise.objects.all()
 
-
-class ExerciseCreate(CreateView):
+class ExerciseCreate(LoginRequiredMixin, CreateView):
     model = Exercise
     fields = "__all__"
     template_name = "exercise_form.html"
     success_url = reverse_lazy("exercises")
 
 
-class ExerciseUpdate(UpdateView):
+class ExerciseUpdate(LoginRequiredMixin, UpdateView):
     model = Exercise
     fields = "__all__"
     template_name = "exercise_form.html"
     success_url = reverse_lazy("exercises")
 
 
-class ExerciseDelete(DeleteView):
+class ExerciseDelete(LoginRequiredMixin, DeleteView):
     model = Exercise
     template_name = "confirm_delete.html"
     success_url = reverse_lazy("exercises")
 
 
-# ------------------ GOALS ------------------
-
-class GoalList(ListView):
+class GoalList(LoginRequiredMixin, ListView):
     model = FitnessGoal
     template_name = "goal_list.html"
 
 
-class GoalCreate(CreateView):
+class GoalCreate(LoginRequiredMixin, CreateView):
     model = FitnessGoal
     fields = "__all__"
     template_name = "goal_form.html"
     success_url = reverse_lazy("goals")
 
 
-class GoalUpdate(UpdateView):
+class GoalUpdate(LoginRequiredMixin, UpdateView):
     model = FitnessGoal
     fields = "__all__"
     template_name = "goal_form.html"
     success_url = reverse_lazy("goals")
 
 
-class GoalDelete(DeleteView):
+class GoalDelete(LoginRequiredMixin, DeleteView):
     model = FitnessGoal
     template_name = "confirm_delete.html"
     success_url = reverse_lazy("goals")
 
 
-# ------------------ WORKOUTS ------------------
-
-class WorkoutList(ListView):
+class WorkoutList(LoginRequiredMixin, ListView):
     model = Workout
     template_name = "workout_list.html"
 
 
-class WorkoutCreate(CreateView):
+class WorkoutCreate(LoginRequiredMixin, CreateView):
     model = Workout
     fields = "__all__"
     template_name = "workout_form.html"
     success_url = reverse_lazy("workouts")
 
 
-class WorkoutUpdate(UpdateView):
+class WorkoutUpdate(LoginRequiredMixin, UpdateView):
     model = Workout
     fields = "__all__"
     template_name = "workout_form.html"
     success_url = reverse_lazy("workouts")
 
 
-class WorkoutDelete(DeleteView):
+class WorkoutDelete(LoginRequiredMixin, DeleteView):
     model = Workout
     template_name = "confirm_delete.html"
     success_url = reverse_lazy("workouts")
