@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<h2>Workouts</h2>
+<a href="/tracker/workouts/add/">Add Workout</a>
+
+<ul>
+{% for w in object_list %}
+<li>{{ w.user }} - {{ w.exercise }} - {{ w.duration_minutes }} min</li>
+{% endfor %}
+</ul>
+
+{% endblock %}

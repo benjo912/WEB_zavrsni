@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<h2>Your Goals</h2>
+
+<a href="{% url 'goal_add' %}">Add Goal</a>
+
+{% for g in object_list %}
+<div class="card">
+<h3>{{ g.title }}</h3>
+<p>{{ g.description }}</p>
+
+<div class="progress">
+<div class="progress-bar" style="width:{{ g.progress }}%"></div>
+</div>
+
+<p>{{ g.current_weight }} / {{ g.target_weight }} kg</p>
+
+<a href="{% url 'goal_edit' g.id %}">Edit</a>
+<a href="{% url 'goal_delete' g.id %}">Delete</a>
+</div>
+{% endfor %}
+
+{% endblock %}

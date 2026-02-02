@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<h2>Goals Overview</h2>
+
+{% for g in goals %}
+<div class="card">
+<b>{{ g.title }}</b>
+<div class="progress">
+<div class="progress-bar" style="width:{{ g.progress }}%"></div>
+</div>
+{{ g.progress }}%
+</div>
+{% endfor %}
+
+{% endblock %}
