@@ -1,24 +1,31 @@
 {% extends 'base.html' %}
 {% block content %}
 
-<h2>Your Goals</h2>
-
-<a href="{% url 'goal_add' %}">Add Goal</a>
-
-{% for g in object_list %}
-<div class="card">
-<h3>{{ g.title }}</h3>
-<p>{{ g.description }}</p>
-
-<div class="progress">
-<div class="progress-bar" style="width:{{ g.progress }}%"></div>
+<div style="display: flex; justify-content: space-between; align-items: center;">
+    <h2>Your Fitness Goals</h2>
+    <a href="{% url 'goal_add' %}" class="btn">Add New Goal</a>
 </div>
 
-<p>{{ g.current_weight }} / {{ g.target_weight }} kg</p>
+<div class="card-grid">
+    {% for g in object_list %}
+    <div class="card">
+        <h3>{{ g.title }}</h3>
+        <p style="font-size: 14px; color: #666;">{{ g.description }}</p>
 
-<a href="{% url 'goal_edit' g.id %}">Edit</a>
-<a href="{% url 'goal_delete' g.id %}">Delete</a>
+        <div class="progress-container">
+            <div class="progress-bar" style="width:{{ g.progress }}%"></div>
+        </div>
+
+        <p><strong>Status:</strong> {{ g.current_weight }} / {{ g.target_weight }} kg ({{ g.progress }}%)</p>
+
+        <div style="margin-top: 20px; display: flex; gap: 10px;">
+            <a href="{% url 'goal_edit' g.id %}" class="btn">Edit</a>
+            <a href="{% url 'goal_delete' g.id %}" class="btn-delete">Delete</a>
+        </div>
+    </div>
+    {% empty %}
+    <p>You haven't set any goals yet.</p>
+    {% endfor %}
 </div>
-{% endfor %}
 
 {% endblock %}

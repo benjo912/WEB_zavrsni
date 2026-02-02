@@ -1,50 +1,78 @@
 {% extends 'base.html' %}
+{% load static %}
 {% block content %}
 
 <div class="auth-card">
+    <h2>Create Account</h2>
+    <form method="post">
+        {% csrf_token %}
+        
+        <div class="auth-field-group">
+            <label>Username</label>
+            {{ form.username }}
+        </div>
 
-<h2>Create Account</h2>
+        <div class="auth-field-group">
+            <label>Email</label>
+            {{ form.email }}
+        </div>
 
-<form method="post">
-{% csrf_token %}
+        <div class="auth-field-group">
+            <label>Birth date</label>
+            {{ form.birth_date }}
+        </div>
 
-<label>Username</label>
-{{ form.username }}
+        <div class="auth-field-group">
+            <label>Password</label>
+            <div class="password-wrapper">
+                {{ form.password1 }}
+                <img src="{% static 'images/passwordnotvisable.png' %}" 
+                     id="eye-icon1" 
+                     class="eye-icon" 
+                     onclick="togglePass1()" 
+                     alt="Toggle Password">
+            </div>
+        </div>
 
-<label>Email</label>
-{{ form.email }}
+        <div class="auth-field-group">
+            <label>Confirm Password</label>
+            <div class="password-wrapper">
+                {{ form.password2 }}
+                <img src="{% static 'images/passwordnotvisable.png' %}" 
+                     id="eye-icon2" 
+                     class="eye-icon" 
+                     onclick="togglePass2()" 
+                     alt="Toggle Password">
+            </div>
+        </div>
 
-<label>Birth date</label>
-{{ form.birth_date }}
-
-<div class="password-box">
-<label>Password</label>
-{{ form.password1 }}
-<span onclick="togglePass1()">👁</span>
-</div>
-
-<div class="password-box">
-<label>Confirm Password</label>
-{{ form.password2 }}
-<span onclick="togglePass2()">👁</span>
-</div>
-
-<button type="submit">Register</button>
-
-</form>
-
+        <button type="submit">Register</button>
+    </form>
 </div>
 
 <script>
 function togglePass1(){
- let f=document.getElementById("id_password1")
- f.type = f.type==="password" ? "text":"password"
+    let f = document.getElementById("id_password1");
+    let icon = document.getElementById("eye-icon1");
+    if (f.type === "password") {
+        f.type = "text";
+        icon.src = "{% static 'images/passwordvisable.png' %}";
+    } else {
+        f.type = "password";
+        icon.src = "{% static 'images/passwordnotvisable.png' %}";
+    }
 }
 
 function togglePass2(){
- let f=document.getElementById("id_password2")
- f.type = f.type==="password" ? "text":"password"
+    let f = document.getElementById("id_password2");
+    let icon = document.getElementById("eye-icon2");
+    if (f.type === "password") {
+        f.type = "text";
+        icon.src = "{% static 'images/passwordvisable.png' %}";
+    } else {
+        f.type = "password";
+        icon.src = "{% static 'images/passwordnotvisable.png' %}";
+    }
 }
 </script>
-
 {% endblock %}

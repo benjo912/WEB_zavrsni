@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<div class="auth-card" style="max-width: 500px;">
+    <h2>{% if object %}Edit{% else %}Add{% endif %} Exercise</h2>
+    
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        
+        {% for field in form %}
+            <div class="auth-field-group">
+                <label>{{ field.label }}</label>
+                {{ field }}
+                {% if field.errors %}
+                    <small style="color: red;">{{ field.errors }}</small>
+                {% endif %}
+            </div>
+        {% endfor %}
+
+        <button type="submit" class="btn">Save Exercise</button>
+        <a href="{% url 'exercises' %}" class="btn-secondary" style="margin-top: 10px; display: block; text-align: center;">Cancel</a>
+    </form>
+</div>
+
+{% endblock %}

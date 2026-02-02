@@ -2,46 +2,78 @@
 {% block content %}
 
 {% if not user.is_authenticated %}
+    <!-- SEKCIJA ZA GOSTE -->
+    <section class="hero">
+        <h1>FitnessTrackerBF</h1>
+        <h2>Build Your Future. Fit Your Body.</h2>
+        <p>The simplest way to track workouts, exercises and goals.</p>
 
-<section class="hero">
-    <h1>Track Your Fitness.<br>Build Your Future.</h1>
-    <p>The simplest way to track workouts, exercises and goals.</p>
+        <div class="hero-buttons" style="margin-top: 20px;">
+            <a href="{% url 'register' %}" class="btn">Get Started</a>
+            <a href="{% url 'login' %}" class="btn-secondary">Login</a>
+        </div>
+    </section>
 
-    <div class="hero-buttons">
-        <a href="{% url 'register' %}" class="btn-primary">Get Started</a>
-        <a href="{% url 'login' %}" class="btn-secondary">Login</a>
-    </div>
-</section>
-
-<section class="features">
-
-<div class="feature-card">
-    <h3>🏋️ Workouts</h3>
-    <p>Create and log your training sessions</p>
-</div>
-
-<div class="feature-card">
-    <h3>📈 Goals</h3>
-    <p>Track your progress visually</p>
-</div>
-
-<div class="feature-card">
-    <h3>🔥 Exercises</h3>
-    <p>Browse exercises with images</p>
-</div>
-
-</section>
+    <section class="features">
+        <div class="card">
+            <h3>🏋️ Workouts</h3>
+            <p>Create and log your training sessions precisely.</p>
+        </div>
+        <div class="card">
+            <h3>📈 Goals</h3>
+            <p>Set targets and track your progress visually.</p>
+        </div>
+        <div class="card">
+            <h3>🔥 Exercises</h3>
+            <p>Browse a library of exercises with helpful images.</p>
+        </div>
+    </section>
 
 {% else %}
+    <!-- DASHBOARD ZA ULOGIRANOG KORISNIKA -->
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px;">
+        <div>
+            <h2 style="margin: 0;">Welcome back, {{ user.username }}! 👋</h2>
+            <p style="color: #666; margin: 5px 0 0 0;">Here is an overview of your current goals.</p>
+        </div>
+        <a href="{% url 'goal_add' %}" class="btn">Add New Goal</a>
+    </div>
 
-<h2>Your Goals</h2>
+    <div class="card-grid">
+        {% for g in goals %}
+        <div class="card">
+            <div style="display: flex; justify-content: space-between; align-items: flex-start;">
+                <h3 style="margin: 0 0 10px 0;">{{ g.title }}</h3>
+                <span style="font-size: 12px; background: #e8f5e9; color: #2e7d32; padding: 4px 8px; border-radius: 20px; font-weight: bold;">
+                    Active
+                </span>
+            </div>
+            
+            <p style="font-size: 14px; color: #555;">{{ g.description|truncatechars:80 }}</p>
+            
+            <!-- Progres bar koji koristi metodu iz modela -->
+            <div style="margin-top: 20px;">
+                <div style="display: flex; justify-content: space-between; font-size: 12px; margin-bottom: 5px;">
+                    <span>Progress</span>
+                    <span>{{ g.progress }}%</span>
+                </div>
+                <div class="progress-container">
+                    <div class="progress-bar" style="width:{{ g.progress }}%"></div>
+                </div>
+            </div>
 
-{% for g in goals %}
-<div class="card">
-    <b>{{ g.title }}</b>
-</div>
-{% endfor %}
-
+            <div style="margin-top: 20px; border-top: 1px solid #eee; padding-top: 15px;">
+                <a href="{% url 'goals' %}" class="btn" style="width: 100%; text-align: center;">View All Details</a>
+            </div>
+        </div>
+        {% empty %}
+        <!-- Prikazuje se ako korisnik nema ni jedan svoj cilj -->
+        <div class="card" style="grid-column: 1 / -1; text-align: center; padding: 50px;">
+            <p style="font-size: 18px; color: #666;">You haven't set any fitness goals yet.</p>
+            <a href="{% url 'goal_add' %}" class="btn" style="margin-top: 15px;">Set Your First Goal</a>
+        </div>
+        {% endfor %}
+    </div>
 {% endif %}
 
 {% endblock %}

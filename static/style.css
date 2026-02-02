@@ -1,163 +1,222 @@
-:root{
---bg:#f4f6fb;
---card:#ffffff;
---text:#111;
---accent:#4CAF50;
+:root {
+    --bg: #f4f6fb;
+    --card: #ffffff;
+    --text: #111;
+    --accent: #4CAF50;
+    --btn-green: #2f7d32;
+    --btn-green-hover: #1b5e20;
 }
 
-.dark{
---bg:#121212;
---card:#1e1e1e;
---text:#eee;
+.dark {
+    --bg: #0d0d0d; 
+    --card: #1e1e1e;
+    --text: #eee;
 }
 
-body{
-background:var(--bg);
-color:var(--text);
-font-family:Segoe UI;
-margin:0;
+* {
+    box-sizing: border-box;
+}
+
+body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin: 0;
+    padding: 0;
+    transition: background 0.3s ease;
+    min-height: 100vh;
 }
 
 /* ================= NAVBAR ================= */
-
-.navbar{
- display:flex;
- justify-content:space-between;
- align-items:center;
- padding:15px 40px;
- background:var(--accent);
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 5%; 
+    background: var(--accent);
+    color: white;
+    width: 100%;
 }
 
-.logo{
- display:flex;
- align-items:center;
- gap:10px;
- font-size:22px;
- color:white;
- text-decoration:none;
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 22px;
 }
 
-.logo-img{
- height:42px;
- width:auto;
+.logo-img {
+    height: 45px;
+    width: auto;
 }
 
-.nav-center a{
- margin:0 15px;
- color:white;
- text-decoration:none;
- font-weight:500;
+.nav-center a {
+    margin: 0 15px;
+    color: white;
+    text-decoration: none;
+    font-weight: 500;
 }
 
-.nav-right{
- display:flex;
- gap:15px;
- align-items:center;
+.nav-right {
+    display: flex;
+    gap: 20px;
+    align-items: center;
 }
 
-.btn{
- padding:8px 16px;
- background:#2f7d32;
- color:white;
- border-radius:6px;
- text-decoration:none;
+/* ================= GUMBOVI (UNIFICIRANI) ================= */
+/* Svi linkovi koji trebaju izgledati kao gumbi koriste ove klase */
+.btn, .btn-logout, .btn-primary, .auth-card button[type="submit"], .btn-add {
+    padding: 10px 20px;
+    background: var(--btn-green);
+    color: white !important;
+    border: none;
+    border-radius: 6px;
+    text-decoration: none !important;
+    font-weight: 600;
+    cursor: pointer;
+    font-size: 14px;
+    display: inline-block;
+    transition: background 0.2s;
 }
 
-.btn-outline{
- padding:8px 16px;
- border:2px solid white;
- color:white;
- border-radius:6px;
- text-decoration:none;
- background:transparent;
+.btn:hover, .btn-logout:hover, .btn-primary:hover, .auth-card button[type="submit"]:hover {
+    background: var(--btn-green-hover);
 }
 
-.btn-logout{
- padding:8px 16px;
- background:#e53935;
- color:white;
- border:none;
- border-radius:6px;
- cursor:pointer;
+.btn-secondary {
+    background: #555;
+    color: white !important;
+    text-decoration: none !important;
+    padding: 10px 20px;
+    border-radius: 6px;
+    font-weight: 600;
+    display: inline-block;
 }
 
-/* ================= CONTAINER ================= */
-
-.container{
-padding:40px;
+.btn-delete {
+    background: #d32f2f;
+    color: white !important;
+    text-decoration: none !important;
+    padding: 10px 20px;
+    border-radius: 6px;
+    font-weight: 600;
+    display: inline-block;
 }
 
-/* ================= AUTH CARD ================= */
+.btn-delete:hover { background: #b71c1c; }
 
-.auth-card{
-max-width:380px;
-margin:80px auto;
-padding:35px;
-background:var(--card);
-border-radius:14px;
-box-shadow:0 10px 30px rgba(0,0,0,0.2);
-text-align:center;
+/* ================= MARGINE I CONTAINER ================= */
+.container {
+    max-width: 1200px;
+    margin: 0 auto;    
+    padding: 40px 30px; 
+    width: 100%;
+    display: block;
 }
 
-.auth-card h2{
-margin-bottom:25px;
+/* ================= GRID SUSTAV ZA KARTICE ================= */
+.card-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 25px;
+    margin-top: 20px;
 }
 
-.auth-card label{
-display:block;
-text-align:left;
-font-size:14px;
-margin-bottom:5px;
+.card {
+    background: var(--card);
+    padding: 25px;
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    transition: transform 0.2s, box-shadow 0.2s;
+    color: var(--text);
+    text-align: left;
 }
 
-.auth-card input{
-width:100%;
-padding:11px 40px 11px 12px;
-border-radius:8px;
-border:1px solid #ccc;
-margin-bottom:15px;
-font-size:14px;
-background:#f1f1f1;
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 25px rgba(0,0,0,0.15);
 }
 
-.dark .auth-card input{
-background:#2c2c2c;
-color:white;
-border:1px solid #444;
+/* ================= PROGRESS BAR (ZA GOALS) ================= */
+.progress-container {
+    background: #e0e0e0;
+    border-radius: 10px;
+    height: 12px;
+    width: 100%;
+    margin: 15px 0;
+    overflow: hidden;
 }
 
-.auth-card button{
-width:100%;
-padding:11px;
-background:#3b82f6;
-color:white;
-border:none;
-border-radius:8px;
-font-size:15px;
-cursor:pointer;
+.progress-bar {
+    background: var(--accent);
+    height: 100%;
+    transition: width 0.5s ease-in-out;
 }
 
-.auth-card button:hover{
-background:#2563eb;
+.dark .progress-container { background: #333; }
+
+/* ================= HERO SEKCIJA (POČETNA) ================= */
+.hero {
+    text-align: center;
+    padding: 60px 20px;
 }
 
-/* ================= PASSWORD FIELD ================= */
+.hero h1 { font-size: 3rem; margin-bottom: 10px; }
+.hero h2 { font-size: 1.5rem; color: var(--accent); font-weight: 400; margin-bottom: 20px; }
+.hero p { font-size: 1.1rem; max-width: 600px; margin: 0 auto 30px; }
 
-.password-box{
-position:relative;
+/* ================= TOGGLE SWITCH ================= */
+.theme-switch-wrapper { display: flex; align-items: center; }
+.theme-switch { display: inline-block; height: 24px; position: relative; width: 50px; }
+.theme-switch input { display:none; }
+.slider {
+  background-color: #ccc;
+  bottom: 0; cursor: pointer; left: 0; position: absolute; right: 0; top: 0;
+  transition: .4s; border-radius: 34px;
+}
+.slider:before {
+  background-color: #fff; bottom: 4px; content: ""; height: 16px; left: 4px;
+  position: absolute; transition: .4s; width: 16px; border-radius: 50%;
+}
+input:checked + .slider { background-color: var(--btn-green); }
+input:checked + .slider:before { transform: translateX(26px); }
+
+/* ================= AUTH & PASSWORD FORME ================= */
+.auth-card {
+    max-width: 400px;
+    margin: 40px auto;
+    padding: 30px;
+    background: var(--card);
+    border-radius: 12px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+    text-align: center;
 }
 
-.password-box span{
-position:absolute;
-right:12px;
-top:38px;
-cursor:pointer;
-font-size:18px;
+.auth-field-group { margin-bottom: 15px; text-align: left; }
+.auth-field-group label { display: block; margin-bottom: 5px; font-weight: 600; font-size: 14px; }
+
+.auth-card input {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    background: #f9f9f9;
 }
 
-/* ================= DARK MODE ================= */
+.dark .auth-card input { background: #2c2c2c; color: white; border: 1px solid #444; }
 
-.dark{
- background:#0d0d0d;
- color:white;
+.password-wrapper { position: relative; width: 100%; display: flex; align-items: center; }
+.password-wrapper input { padding-right: 45px !important; margin-bottom: 0 !important; }
+
+.eye-icon {
+    position: absolute; right: 12px; top: 50%; transform: translateY(-50%); 
+    width: 24px; height: auto; cursor: pointer; z-index: 10; opacity: 0.6;
 }
+.eye-icon:hover { opacity: 1; }
+
+/* ================= DARK MODE DODACI ================= */
+.dark .card { border: 1px solid #333; }
+.dark .btn-secondary { background: #333; }

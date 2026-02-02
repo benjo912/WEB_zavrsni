@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<div class="auth-card" style="max-width: 500px;">
+    <h2>{% if object %}Update{% else %}Set New{% endif %} Goal</h2>
+    
+    <form method="post">
+        {% csrf_token %}
+        
+        {% for field in form %}
+            <div class="auth-field-group">
+                <label>{{ field.label }}</label>
+                {{ field }}
+                {% if field.errors %}
+                    <small style="color: red;">{{ field.errors }}</small>
+                {% endif %}
+            </div>
+        {% endfor %}
+
+        <button type="submit" class="btn">Save Goal</button>
+        <a href="{% url 'goals' %}" class="btn-secondary" style="margin-top: 10px; display: block; text-align: center;">Back to Goals</a>
+    </form>
+</div>
+
+{% endblock %}
