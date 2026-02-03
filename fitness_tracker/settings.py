@@ -28,6 +28,7 @@ DEBUG = True
 ALLOWED_HOSTS = [
     'fitnesstrackerbf-58us.onrender.com', 
     'localhost',
+    '127.0.0.1',
 ]
 
 
@@ -123,6 +124,7 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 STATICFILES_DIRS = [BASE_DIR / "static"]
+STATIC_ROOT = BASE_DIR / 'staticfiles'
 
 
 # Default primary key field type
