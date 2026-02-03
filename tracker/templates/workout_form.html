@@ -1,6 +1,5 @@
 {% extends 'base.html' %}
 {% block content %}
-
 <div class="auth-card" style="max-width: 500px;">
     <h2>Log Workout</h2>
     <p style="margin-bottom: 20px; font-size: 14px; color: #666;">Record your hard work!</p>
@@ -10,17 +9,18 @@
         
         {% for field in form %}
             <div class="auth-field-group">
-                <label>{{ field.label }}</label>
+                <label for="{{ field.id_for_label }}">{{ field.label }}</label>
                 {{ field }}
                 {% if field.errors %}
-                    <small style="color: red;">{{ field.errors }}</small>
+                    <div style="color: #ff5252; font-size: 12px; margin-top: 4px;">{{ field.errors }}</div>
                 {% endif %}
             </div>
         {% endfor %}
 
-        <button type="submit" class="btn">Log Session</button>
-        <a href="{% url 'workouts' %}" class="btn-secondary" style="margin-top: 10px; display: block; text-align: center;">Cancel</a>
+        <div style="margin-top: 20px;">
+            <button type="submit" class="btn" style="width: 100%;">Log Session</button>
+            <a href="{% url 'workouts' %}" class="btn-secondary" style="margin-top: 10px; display: block; text-align: center;">Cancel</a>
+        </div>
     </form>
 </div>
-
 {% endblock %}

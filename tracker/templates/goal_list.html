@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 {% block content %}
 
-<div style="display: flex; justify-content: space-between; align-items: center;">
+<div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
     <h2>Your Fitness Goals</h2>
     <a href="{% url 'goal_add' %}" class="btn">Add New Goal</a>
 </div>
@@ -10,13 +10,16 @@
     {% for g in object_list %}
     <div class="card">
         <h3>{{ g.title }}</h3>
-        <p style="font-size: 14px; color: #666;">{{ g.description }}</p>
+        <p style="font-size: 14px; color: #666; margin-bottom: 15px;">{{ g.description }}</p>
 
         <div class="progress-container">
             <div class="progress-bar" style="width:{{ g.progress }}%"></div>
         </div>
 
-        <p><strong>Status:</strong> {{ g.current_weight }} / {{ g.target_weight }} kg ({{ g.progress }}%)</p>
+        <p style="font-size: 14px; margin: 10px 0;">
+            <strong>Status:</strong> {{ g.current_weight }} / {{ g.target_weight }} kg ({{ g.progress }}%)
+        </p>
+        <p style="font-size: 13px; color: #888;">Deadline: {{ g.deadline|date:"d.m.Y." }}</p>
 
         <div style="margin-top: 20px; display: flex; gap: 10px;">
             <a href="{% url 'goal_edit' g.id %}" class="btn">Edit</a>
@@ -24,7 +27,10 @@
         </div>
     </div>
     {% empty %}
-    <p>You haven't set any goals yet.</p>
+    <div class="card" style="grid-column: 1 / -1; text-align: center; padding: 40px;">
+        <p>You haven't set any goals yet.</p>
+        <a href="{% url 'goal_add' %}" class="btn" style="margin-top: 10px;">Create Your First Goal</a>
+    </div>
     {% endfor %}
 </div>
 
